@@ -7,33 +7,26 @@ export default function TextForm(props) {
     let newtext = text.toUpperCase();
     if (text1.value !== text.toUpperCase()) {
       setText(newtext);
-      {
+      
         props.showAlert(
           `Text is converted to UpperCase: ${newtext}`,
           "success"
         );
-      }
+      
     } else {
-      {
+      
         props.showAlert(`Text is already in UpperCase!!`, "info");
-      }
+      
     }
   };
   const handleLoClick = () => {
     let text1 = document.querySelector("#myBox");
     let newtext = text.toLowerCase();
     if (text1.value !== text.toLowerCase()) {
-      {
-        props.showAlert(
-          `Text is converted to LowerCase: ${newtext}`,
-          "success"
-        );
-      }
-    } else {
       setText(newtext);
-      {
-        props.showAlert(`Text is already in LowerCase!!`, "info");
-      }
+      props.showAlert(`Text is converted to LowerCase: ${newtext}`, "success");
+    } else {
+      props.showAlert(`Text is already in LowerCase!!`, "info");
     }
   };
   const handleReClick = () => {
@@ -106,11 +99,10 @@ export default function TextForm(props) {
   };
   const handleNormalClick = () => {
     let text1 = document.querySelector("#myBox");
-    if (text1.style.fontStyle !== "normal") {
+    if (text1.style.fontStyle !== "normal" && text1.style.fontWeight > "400") {
       text1.style.fontStyle = "normal";
-    } else if (text1.style.fontWeight > "400") {
-      text1.style.fontWeight = "400";
-    }
+      text1.style.fontWeight = "400"
+    } 
     let newText = text1.value;
     setText(newText);
   };
@@ -137,37 +129,36 @@ export default function TextForm(props) {
           onChange={handleOnChange}
           rows="10"
         ></textarea>
-        <button className="btn btn-primary my-3 " onClick={handleUpClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3 " onClick={handleUpClick}>
           Convert to Uppercase
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleLoClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3 mx-2" onClick={handleLoClick}>
           Convert to Lowercase
         </button>
-        <button className="btn btn-primary my-3" onClick={handleReClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3" onClick={handleReClick}>
           Reset
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleCaClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3 mx-2" onClick={handleCaClick}>
           Capitalized Case
         </button>
-        <button className="btn btn-primary my-3 " onClick={handleCopyClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3 " onClick={handleCopyClick}>
           Copy to Clipboard
         </button>
-        <button
+        <button disabled={text.length=== 0}
           className="btn btn-primary my-3 mx-2"
-          onClick={handleExtraSpaces}
-        >
+          onClick={handleExtraSpaces}>
           Remove Extra Spaces
         </button>
-        <button className="btn btn-primary my-3 " onClick={handleBoldClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3 " onClick={handleBoldClick}>
           Bold
         </button>
-        <button
+        <button disabled={text.length=== 0}
           className="btn btn-primary my-3 mx-2"
           onClick={handleItalicClick}
         >
           Italic
         </button>
-        <button className="btn btn-primary my-3" onClick={handleNormalClick}>
+        <button disabled={text.length=== 0} className="btn btn-primary my-3" onClick={handleNormalClick}>
           Convert to Normal
         </button>
       </div>
@@ -177,11 +168,11 @@ export default function TextForm(props) {
       >
         <h2>Your Text Summary Here</h2>
         <p>
-          {text.split(" ").length} words and {text.length} characters
+          {text.split(/\s+/).filter((element)=>{return element.length !==0}).length} words and {text.length} characters
         </p>
-        <p>{0.008 * text.split(" ").length} minutes required to read</p>
+        <p>{0.008 * text.split(/\s+/).filter((element)=>{return element.length !==0}).length} minutes required to read</p>
       </div>
-    </>
+    </> 
   );
 }
 
